@@ -1,5 +1,3 @@
-// require('dotenv').config({path: './env'})
-
 import dns from "dns";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
@@ -7,14 +5,33 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 import express from "express"
 import connectDB from "./db/index.js";
 import dotenv from "dotenv"
+import { app } from "./app.js";
 
 dotenv.config({
     path: './env'
 })
 
-connectDB();
+connectDB().then(
+    ()=>{
+        app.on("error",(er)=>{
+            console.log("Error @ on: ", er)
+        })
+        app.listen(process.env.PORT || 8000, ()=>{
+            console.log("Server is running @ port: ", process.env.PORT)
+        })
+    }
+).catch(
+    (err)=>{
+        console.log("Error @ db connect : ", err);
+    }
+);
 
-// async function connectDB(){
+
+
+
+
+
+// ;async function connectDB(){
 
 // }
 // const app = express();
@@ -24,7 +41,7 @@ connectDB();
 //     try{
 //         await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
 
-//         app.on("ERROR", (error)=>{
+//         app.on("error", (error)=>{
 //             console.log("ERRR: ", error);
 //             throw error;
 //         })
