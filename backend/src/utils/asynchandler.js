@@ -4,9 +4,9 @@
 const asynchandler = (func)=>{ ()=>{} }
 Method 1
 */
-const asynchandler = (func)=> async (req, res, next)=>{
+const asyncHandler = (func)=> async (req, res, next)=>{
     try{
-        await func();
+        await func(req, res, next);
     }
     catch(error){
         res.send(error.code || 500).json(
@@ -18,9 +18,11 @@ const asynchandler = (func)=> async (req, res, next)=>{
     }
 } 
 
+export {asyncHandler}
+
 /*
-Method 2 
+Method 2  
 const asynchandler = (requesthandler)=>{
     Promise.resolve(requesthandler(req, res, next)).catch((err)=> nextg(err))
-}
+} 
 */
