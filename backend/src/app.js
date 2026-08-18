@@ -23,10 +23,10 @@ import userRouter from "./routes/user.routes.js"
 
 
 app.use("/api/v1/users", userRouter)
-app.get("/api/v1/users",(req, res)=>{
-    res.json({
-        name: "connetced"
-    })
-})
+// app.get("/api/v1/users",(req, res)=>{
+//     res.json({
+//         name: "connetced"
+//     })
+// })
 
 export {app};

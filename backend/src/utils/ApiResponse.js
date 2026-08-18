@@ -7,4 +7,6 @@ class ApiResponse {
     }
 }
 
+export {ApiResponse}
+
 //Learn about statuscode
