@@ -47,10 +47,9 @@ const userSchema = new mongoose.Schema({
 
 // https://chatgpt.com/share/6a7f561c-5718-83e8-9849-a18a6be15847 <- Why not use an arrow function here 
 // userSchema.pre("save",()=>{})
-userSchema.pre("save",async function (err, req, res, next){
-    if (!this.isModified("password")) return next();
-        this.password = await bcrypt.hash(this.password, 10);
-        next();
+userSchema.pre("save",async function (){
+    if (!this.isModified("password")) return;
+    this.password = await bcrypt.hash(this.password, 10);
 })
 
 /*Attaching a method to the UserSchema , That means every User document created from this schema gets this method.

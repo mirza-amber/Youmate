@@ -4,13 +4,13 @@ import { User } from "../models/user.model.js";
 import { uploadonCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
-const registerUser = asyncHandler(async(req, res)=>{
+const registerUser = asyncHandler(async(req, res, next)=>{
     //take data from the user
     const {username, email, fullName, password} = req.body;
+    /*
     res.send(`${username} + ${email}`);
     console.log(email, username);
 
-    /*
     // Validate the data coming from the user Method 1
     if (fullName === ""){
         throw new ApiError(400, "full name is required")
@@ -25,7 +25,7 @@ const registerUser = asyncHandler(async(req, res)=>{
     }
 
     //User existence check
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{username}, {email}]
     })
      
@@ -43,7 +43,7 @@ const registerUser = asyncHandler(async(req, res)=>{
 
     //Upload files to cloudinary
     const avatar = await uploadonCloudinary(avatarLocalPath)
-    const coverImage = await uploadonCloudinary(coverImageLocalPath)
+    const coverImage = coverImageLocalPath?await uploadonCloudinary(coverImageLocalPath):null
 
     //User existence confirmation
     if(!avatar){
@@ -59,8 +59,8 @@ const registerUser = asyncHandler(async(req, res)=>{
         username:username.toLowerCase()
     })
 
-    const createdUser = await User.findbyId(user._id).select(
-        "-password -refresToken"
+    const createdUser = await User.findById(user._id).select(
+        "-password -refreshToken"
     )
 
     if(!createdUser){

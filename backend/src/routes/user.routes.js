@@ -17,16 +17,16 @@ router.route("/register").post(registerUser)
 // Route with file upload
 
 router.route("/register").post(
-    upload.fields(
+    upload.fields([
         {
-            name: "Avatar",
+            name: "avatar",
             maxCount: 1
         },
         {
             name: "coverImage",
             maxCount:1
         }
-),
+    ]),
 registerUser
 )
 

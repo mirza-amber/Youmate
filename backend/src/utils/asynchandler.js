@@ -9,7 +9,9 @@ const asyncHandler = (func)=> async (req, res, next)=>{
         await func(req, res, next);
     }
     catch(error){
-        res.send(error.code || 500).json(
+        console.log("ACTUAL ERROR:", error);
+        console.log("STACK:", error.stack);
+        res.status(error.statuscode || 500).json(
             {
                 success : false,
                 message : error.message
