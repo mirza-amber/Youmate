@@ -4,7 +4,7 @@ import { User } from "../models/user.model.js";
 import { uploadonCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
-const registerUser = asyncHandler(async(req, res, next)=>{
+const registerUser = asyncHandler(async(req, res)=>{
     //take data from the user
     const {username, email, fullName, password} = req.body;
     /*
